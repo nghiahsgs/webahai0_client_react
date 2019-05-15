@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import http from "../../services/users";
-import OrderDetails from "./orderDetails";
+// import OrderDetails from "./orderDetails";
 
 class User_detail_info extends Component {
     state = { 
@@ -46,13 +46,13 @@ class User_detail_info extends Component {
         console.log(order_details)
         this.setState({order_details});
     }
-    renderObjectInput=(element)=>{
-        return element.range.map(ip=> {
-            return (
-                <OrderDetails ip={ip} key={ip.name} addOrderDetail={()=>this.addOrderDetail(ip)}/>
-            )
-        })
-     }
+    // renderObjectInput=(element)=>{
+    //     return element.range.map(ip=> {
+    //         return (
+    //             <OrderDetails ip={ip} key={ip.name} addOrderDetail={()=>this.addOrderDetail(ip)}/>
+    //         )
+    //     })
+    //  }
     render() { 
         return (
             <div>
@@ -85,17 +85,17 @@ class User_detail_info extends Component {
                                 </React.Fragment>
                             )
                         }
-                        if(element.type==="objectInput"){
-                            return (
-                                <React.Fragment key={element.name}>
+                        // if(element.type==="objectInput"){
+                        //     return (
+                        //         <React.Fragment key={element.name}>
                                     
                                     
-                                    {this.renderObjectInput(element)}
+                        //             {this.renderObjectInput(element)}
 
 
-                                </React.Fragment>
-                            )
-                        }
+                        //         </React.Fragment>
+                        //     )
+                        // }
                         return "unsupport type"
 
                     })

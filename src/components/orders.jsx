@@ -13,9 +13,9 @@ class Orders extends Component {
         users:[],
         templateRenders:[
             {type:"select",name:"status",range:[],value:""},
-            {type:"select",name:"statusextends_transfer",range:[],value:""},
+            {type:"select",name:"status_transfer",range:[],value:""},
        
-            {type:"input",name:"addressextends",range:"",value:""},
+            {type:"input",name:"address",range:"",value:""},
             {type:"select",name:"address_in_hanoi",range:[
                 {option:"false",value:"false"},
                 {option:"true",value:"true"}
@@ -41,7 +41,8 @@ class Orders extends Component {
 
 
         ],
-        mainField:"phone"
+        mainField:"phone",
+        productsRange:[]
      }
     async componentDidMount() {
         //init cac option cho status
@@ -58,6 +59,14 @@ class Orders extends Component {
         data.map(s=>{
             status_transferRange.push({option:s.text,value:s._id})
         })
+         //init cac option cho products
+         http.setEndpoint("http://localhost:5000/api/products/");
+         data=await http.get();
+         let productsRange=[{option:"null",value:"null"}]
+         data.map(s=>{
+            productsRange.push({option:s.name,value:s._id})
+         })
+         this.setState({productsRange});
         
        
 
@@ -156,7 +165,7 @@ class Orders extends Component {
                 <Add_new_order new_user_isShow={this.state.new_user_isShow} 
                 endPoint="http://localhost:5000/api/orders/" 
                 templateRenders={this.state.templateRenders} handleShowCreate={()=>this.handleShowCreate()}
-                
+                productsRange={this.state.productsRange}
                 />
 
 
@@ -191,7 +200,10 @@ class Orders extends Component {
                                     <button className="btn btn-warning" onClick={()=>this.handleDelete(u._id)}>delete</button>
                                 </div>
                                 
-                                <Order_detail_info user={u} templateRenders={this.state.templateRenders}/>
+                                <Order_detail_info user={u} 
+                                templateRenders={this.state.templateRenders}
+                                productsRange={this.state.productsRange}
+                                />
                                 <hr/>
                             </React.Fragment>
                         )
